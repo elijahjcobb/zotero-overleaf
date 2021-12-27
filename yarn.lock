@@ -177,6 +177,11 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
+"@element-ts/oxygen@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@element-ts/oxygen/-/oxygen-1.2.4.tgz#22dd4b29f783188316d3965f80debe23be63c507"
+  integrity sha512-M9SmUnY2ssUlCUop0DvkYfeTcDdnwM4BFeT1iTfGp4ZxnS3fJxeBA87Cp7lDoBvQoVPoGBuz0VxW0Jo65qEVGQ==
+
 "@emotion/babel-plugin@^11.3.0":
   version "11.7.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.7.2.tgz#fec75f38a6ab5b304b0601c74e2a5e77c95e5fa0"

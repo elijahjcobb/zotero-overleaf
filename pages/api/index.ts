@@ -1,9 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import {OEnum, OObjectType, OStandardType} from "@element-ts/oxygen";
 
-type Data = {
-	name: string
-}
+type Res = {err: string} | {};
 
 // https://api.zotero.org/<groups | users>/<id>/collections?limit=1000
 // gets all folders recursively
@@ -19,9 +18,18 @@ type Data = {
 // https://api.zotero.org/groups/<group-id>/collections?limit=1000 this gets ALL folders
 // ask if json or bibtex
 
-export default function handler(
-	req: NextApiRequest,
-	res: NextApiResponse<Data>
-) {
-	res.status(200).json({ name: 'John Doe' })
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Res>) {
+
+	const config = OObjectType.follow({
+		ownerType: OEnum.any("user", "group"),
+		format: OEnum.any("bibtex", "json"),
+		mode: OEnum.any("single", "recursive"),
+		ownerId: OStandardType.string,
+		collectionId: OStandardType.string
+	}).verify(req.query);
+
+	if (!config) return res.status(400).json({err: "Invalid request, go to zotero.overleaf.xyz to build a API request."});
+
+
+	res.status(200).json(config);
 }

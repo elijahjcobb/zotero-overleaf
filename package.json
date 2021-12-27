@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@element-ts/oxygen": "^1.2.4",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
