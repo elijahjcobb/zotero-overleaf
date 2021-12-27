@@ -11,10 +11,14 @@
 
 .url {
 
-	cursor: pointer;
 	padding: 16px;
+	overflow: hidden;
 
 	span {
 		font-family: monospace;
 	}
+}
+
+.clearButton {
+	margin-left: 16px;
 }

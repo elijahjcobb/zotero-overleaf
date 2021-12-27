@@ -21,7 +21,7 @@ const Home: NextPage = () => {
 	const [ownerType, setOwnerType] = useState("user");
 	const [ownerId, setOwnerId] = useState("");
 	const [formatType, setFormatType] = useState("bibtex");
-	const [recursive, setRecursive] = useState(false);
+	const [mode, setMode] = useState("recursive");
 	const [collectionId, setCollectionId] = useState("");
 	const [url, setUrl] = useState("");
 
@@ -31,14 +31,14 @@ const Home: NextPage = () => {
 		const config = {
 			ownerType,
 			format: formatType,
-			recursive,
+			mode,
 			ownerId,
 			collectionId
 		}
 
 		setUrl(baseUrl + "?" + QueryString.stringify(config, {}));
 
-	}, [ownerType, formatType, recursive, collectionId, ownerId]);
+	}, [ownerType, formatType, mode, collectionId, ownerId]);
 
 	return (
 		<Box sx={{flexGrow: 1}}>
@@ -51,6 +51,10 @@ const Home: NextPage = () => {
 			</AppBar>
 			<Container maxWidth={"sm"} className={styles.container}>
 				<FormGroup className={styles.form}>
+					<h2>Owner</h2>
+					<TextField
+						value={ownerId}
+						onChange={ev => setOwnerId(ev.target.value)} label="Owner Id" variant="standard"/>
 					<FormControl component="fieldset">
 						<FormLabel component="legend">Owner Type:</FormLabel>
 						<RadioGroup value={ownerType} onChange={ev => setOwnerType(ev.target.value)}>
@@ -58,9 +62,7 @@ const Home: NextPage = () => {
 							<FormControlLabel value="group" control={<Radio/>} label="Group"/>
 						</RadioGroup>
 					</FormControl>
-					<TextField
-						value={ownerId}
-						onChange={ev => setOwnerId(ev.target.value)} label="Owner Id" variant="standard"/>
+					<h2>Format</h2>
 					<FormControl component="fieldset">
 						<FormLabel component="legend">Format:</FormLabel>
 						<RadioGroup value={formatType} onChange={ev => setFormatType(ev.target.value)}>
@@ -68,15 +70,34 @@ const Home: NextPage = () => {
 							<FormControlLabel value="json" control={<Radio/>} label="json"/>
 						</RadioGroup>
 					</FormControl>
-					<FormControlLabel control={<Switch
-						value={recursive}
-						onChange={(e, v) => setRecursive(v)}
-						defaultChecked/>} label="Recursive"/>
+					<FormControl component="fieldset">
+						<FormLabel component="legend">Mode:</FormLabel>
+						<RadioGroup value={mode} onChange={ev => setMode(ev.target.value)}>
+							<FormControlLabel value="recursive" control={<Radio/>} label="Recurisve"/>
+							<FormControlLabel value="single" control={<Radio/>} label="Single"/>
+						</RadioGroup>
+					</FormControl>
+					<h2>Collection</h2>
 					<TextField
 						value={collectionId}
 						onChange={ev => setCollectionId(ev.target.value)} label="Collection Id" variant="standard"/>
 				</FormGroup>
-				<Button variant="contained">Copy</Button>
+				<h2>API URL</h2>
+				<Paper className={styles.url} elevation={3}>
+					<span>{url}</span>
+				</Paper>
+				<Button onClick={() => {
+					navigator.clipboard.writeText(url).catch(console.error);
+				}} variant="contained">Copy</Button>
+				<Button
+					onClick={() => {
+						setOwnerType("user");
+						setOwnerId("");
+						setFormatType("bibtex");
+						setMode("recursive");
+						setCollectionId("");
+					}}
+					className={styles.clearButton} variant="text">Clear</Button>
 			</Container>
 		</Box>
 	);
