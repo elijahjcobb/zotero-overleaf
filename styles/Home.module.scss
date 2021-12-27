@@ -5,3 +5,16 @@
  * github.com/elijahjcobb
  */
 
+.form > *, .container > * {
+	margin-top: 32px;
+}
+
+.url {
+
+	cursor: pointer;
+	padding: 16px;
+
+	span {
+		font-family: monospace;
+	}
+}
